@@ -52,7 +52,7 @@ class InitialsDrawer(Node):
         start_time = time.time()
         while time.time() - start_time < duration:
             pub.publish(msg)
-            time.sleep(0.05) # 20Hz: Smoother for VMs, reduces CPU overhead
+            time.sleep(0.001) # 20Hz: Smoother for VMs, reduces CPU overhead
         
         # Stop moving
         pub.publish(Twist())
@@ -83,10 +83,12 @@ def main(args=None):
     # 5. Draw 'T'
     node.get_logger().info('Drawing T...')
     # Vertical line up
-    node.move_turtle('turtle_t', linear_x=1.0, angular_z=0.0, duration=5.0) # Up to (8,9)
+    node.move_turtle('turtle_t', linear_x=1.0, angular_z=0.0, duration=6.5) # Up to (8,9)
     # ?
-    node.move_turtle('turtle_t', linear_x=0.0, angular_z=-1, duration= math.pi)
-    node.move_turtle('turtle_t', linear_x=2.5, angular_z=0.0, duration=1.0)
+    node.move_turtle('turtle_t', linear_x=0.0, angular_z=1.0, duration= math.pi/2)
+    node.move_turtle('turtle_t', linear_x=1.0, angular_z=0.0, duration=2.5)
+    node.move_turtle('turtle_t', linear_x=0.0, angular_z=1.0, duration= math.pi)
+    node.move_turtle('turtle_t', linear_x=1.0, angular_z=0.0, duration=5.0)
     
 
     node.destroy_node()
