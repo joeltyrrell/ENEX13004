@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<robot name="robotic_manip_3">
+
+<!-- Base Link -->
+<link name="base_link">
+    <visual>
+        <origin xyz="0 0 0.5" rpy="0 0 0" />
+        <geometry>
+            <cylinder radius="1" length="1"/>
+        </geometry>
+        <material name="black">
+            <color rgba="0 0 0 0"/>
+        </material>
+    </visual>
+</link>
+
+<!-- Joint 1 -->
+<joint name="joint_1" type="revolute">
+    <parent link="base_link"/>
+    <child link="link_1"/>
+    <origin xyz="0 0 1" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="100" velocity="1"/>
+</joint>
