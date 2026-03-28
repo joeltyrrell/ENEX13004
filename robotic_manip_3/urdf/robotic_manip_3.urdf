@@ -4,12 +4,12 @@
 <!-- Base Link -->
 <link name="base_link">
     <visual>
-        <origin xyz="0 0 0.5" rpy="0 0 0" />
+        <origin xyz="0 0 5" rpy="0 0 0" />
         <geometry>
-            <cylinder radius="1" length="1"/>
+            <cylinder radius="5" length="10"/>
         </geometry>
         <material name="black">
-            <color rgba="0 0 0 0"/>
+            <color rgba="0 0 0 1"/>
         </material>
     </visual>
 </link>
@@ -18,7 +18,76 @@
 <joint name="joint_1" type="revolute">
     <parent link="base_link"/>
     <child link="link_1"/>
-    <origin xyz="0 0 1" rpy="0 0 0"/>
+    <origin xyz="0 0 10" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit effort="100" velocity="1"/>
+    <limit effort="100" velocity="1" lower="-3.14" upper="3.14"/>
 </joint>
+
+<!-- Link 1 -->
+<link name="link_1">
+    <visual>
+      <origin xyz="0 0 20" rpy="0 0 0" />
+      <geometry>
+        <box size="1 1 40"/>
+      </geometry>
+      <material name="yellow">
+        <color rgba="1 1 0 1"/>
+      </material>
+    </visual>
+</link>
+
+<!-- Joint 2 -->
+<joint name="joint_2" type="revolute">
+    <parent link="link_1"/>
+    <child link="link_2"/>
+    <origin xyz="0 0 40" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="100" velocity="1" lower="-3.14" upper="3.14"/>
+</joint>
+
+<!-- Link 2 -->
+<link name="link_2">
+    <visual>
+      <origin xyz="0 0 10" rpy="0 0 0" />
+      <geometry>
+        <box size="1 1 20"/>
+      </geometry>
+      <material name="red">
+        <color rgba="1 0 0 1"/>
+      </material>
+    </visual>
+</link>
+
+<!-- Joint 3 -->
+<joint name="joint_3" type="revolute">
+    <parent link="link_2"/>
+    <child link="link_3"/>
+    <origin xyz="0 0 10" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="100" velocity="1" lower="-3.14" upper="3.14"/>
+</joint>
+
+<!-- Link 3 -->
+<link name="link_3">
+    <visual>
+      <origin xyz="0 0 10" rpy="0 0 0" />
+      <geometry>
+        <box size="1 1 20"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+</link>
+
+<!-- End Effector Joint -->
+<joint name="joint_ee" type="fixed">
+  <parent link="link_3"/>
+  <child link="link_ee"/>
+  <origin xyz="0 0 20" rpy="0 0 0"/>
+</joint>
+
+<!-- End Effector Link -->
+<link name="link_ee"/>
+
+</robot>
