@@ -8,7 +8,7 @@
             <cylinder radius="0.1" length="0.1"/>
         </geometry>
         <material name="black">
-            <color rgba="0 0 0 1"/>
+            <color rgba="0 0 0 0.9"/>
         </material>
     </visual>
 </link>
@@ -28,7 +28,7 @@
         <box size="0.01 0.01 0.4"/>
       </geometry>
       <material name="yellow">
-        <color rgba="1 1 0 1"/>
+        <color rgba="1 1 0 0.9"/>
       </material>
     </visual>
 </link>
@@ -48,7 +48,7 @@
         <box size="0.01 0.01 0.2"/>
       </geometry>
       <material name="red">
-        <color rgba="1 0 0 1"/>
+        <color rgba="1 0 0 0.9"/>
       </material>
     </visual>
 </link>
@@ -67,7 +67,7 @@
         <box size="0.01 0.01 0.2"/>
       </geometry>
       <material name="blue">
-        <color rgba="0 0 1 1"/>
+        <color rgba="0 0 1 0.9"/>
       </material>
     </visual>
 </link>
