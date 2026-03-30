@@ -24,7 +24,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'make_initials = my_initials.make_initials:main',
+            'my_initials = my_initials.my_initials:main',
         ],
     },
 )
