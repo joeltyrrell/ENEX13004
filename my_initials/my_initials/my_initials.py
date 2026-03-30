@@ -59,7 +59,7 @@ class InitialsDrawer(Node):
         start_time = time.time()
         while time.time() - start_time < duration:
             pub.publish(msg)
-            time.sleep(0.01)
+            time.sleep(0.0001)
         
         # Stop moving
         pub.publish(Twist())
