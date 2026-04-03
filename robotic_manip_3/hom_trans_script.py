@@ -18,7 +18,8 @@ l2 = 0.2
 l3 = 0.2
 
 #Homogenous Transformation to find end effector position and orintation with respect to the base.
-#Each matrix to be multiplied on the RHS of the equation B_T_EE = B_T_1 x 1_T_2 x 2_T_3 x 3_T_EE is added as an individual variable 
+#Each matrix to be multiplied on the RHS of the equation
+#B_T_EE = B_T_1 x 1_T_2 x 2_T_3 x 3_T_EE is added as an individual array 
 
 #Base to joint 1 transformation matrix
 B_T_1 = np.array([[np.cos(q1), -np.sin(q1), 0, 0],
