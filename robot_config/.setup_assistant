@@ -1,0 +1,10 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: my_robot_description
+    relative_path: urdf/robot.urdf
+  srdf:
+    relative_path: config/robotic_manip_3.srdf
+  package_settings:
+    author_name: Joel Tyrrell
+    author_email: joel.tyrrell@cqumail.com
+    generated_timestamp: 1777283756

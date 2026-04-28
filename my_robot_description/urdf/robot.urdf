@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<robot name="robotic_manip_3">
+
+<link name="base_link">
+    <visual>
+        <origin xyz="0 0 0.05" rpy="0 0 0" />
+        <geometry><cylinder radius="0.1" length="0.1"/></geometry>
+        <material name="black"><color rgba="0 0 0 0.9"/></material>
+    </visual>
+    <collision>
+        <origin xyz="0 0 0.05" rpy="0 0 0" />
+        <geometry><cylinder radius="0.1" length="0.1"/></geometry>
+    </collision>
+</link>
+
+<joint name="joint_1" type="revolute">
+    <parent link="base_link"/>
+    <child link="link_1"/>
+    <origin xyz="0 0 0.1" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="100" velocity="1" lower="-3.14" upper="3.14"/>
+</joint>
+
+<link name="link_1">
+    <visual>
+      <origin xyz="0 0 0.2" rpy="0 0 0" />
+      <geometry><box size="0.01 0.01 0.4"/></geometry>
+      <material name="yellow"><color rgba="1 1 0 0.9"/></material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.2" rpy="0 0 0" />
+      <geometry><box size="0.01 0.01 0.4"/></geometry>
+    </collision>
+</link>
+
+<joint name="joint_2" type="revolute">
+    <parent link="link_1"/>
+    <child link="link_2"/>
+    <origin xyz="0 0 0.4" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="100" velocity="1" lower="-3.14" upper="3.14"/>
+</joint>
+
+<link name="link_2">
+    <visual>
+      <origin xyz="0 0 0.1" rpy="0 0 0" />
+      <geometry><box size="0.01 0.01 0.2"/></geometry>
+      <material name="red"><color rgba="1 0 0 0.9"/></material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.1" rpy="0 0 0" />
+      <geometry><box size="0.01 0.01 0.2"/></geometry>
+    </collision>
+</link>
+
+<joint name="joint_3" type="revolute">
+    <parent link="link_2"/>
+    <child link="link_3"/>
+    <origin xyz="0 0 0.2" rpy="0 0 0"/> 
+    <axis xyz="0 1 0"/>
+    <limit effort="100" velocity="1" lower="-3.14" upper="3.14"/>
+</joint>
+
+<link name="link_3">
+    <visual>
+      <origin xyz="0 0 0.1" rpy="0 0 0" /> 
+      <geometry><box size="0.01 0.01 0.2"/></geometry>
+      <material name="blue"><color rgba="0 0 1 0.9"/></material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.1" rpy="0 0 0" /> 
+      <geometry><box size="0.01 0.01 0.2"/></geometry>
+    </collision>
+</link>
+
+<joint name="joint_ee" type="revolute">
+  <parent link="link_3"/>
+  <child link="link_ee"/>
+  <origin xyz="0 0 0.2" rpy="0 0 0"/> 
+  <axis xyz="0 0 1"/> <limit effort="100" velocity="1" lower="-3.14" upper="3.14"/>
+</joint>
+
+<link name="link_ee"/>
+
+<ros2_control name="FakeSystem" type="system">
+  <hardware>
+    <plugin>mock_components/GenericSystem</plugin>
+  </hardware>
+  <joint name="joint_1">
+    <command_interface name="position"/>
+    <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
+  </joint>
+  <joint name="joint_2">
+    <command_interface name="position"/>
+    <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
+  </joint>
+  <joint name="joint_3">
+    <command_interface name="position"/>
+    <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
+  </joint>
+  <joint name="joint_ee">
+    <command_interface name="position"/>
+    <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
+  </joint>
+</ros2_control>
+
+</robot>
