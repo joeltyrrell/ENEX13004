@@ -7,7 +7,7 @@ Panels:
         - /MotionPlanning1
         - /MotionPlanning1/Planning Request1
       Splitter Ratio: 0.5
-    Tree Height: 588
+    Tree Height: 287
   - Class: rviz_common/Help
     Name: Help
   - Class: rviz_common/Views
@@ -40,7 +40,7 @@ Visualization Manager:
       Class: moveit_rviz_plugin/MotionPlanning
       Enabled: true
       Move Group Namespace: ""
-      MoveIt_Allow_Approximate_IK: true
+      MoveIt_Allow_Approximate_IK: false
       MoveIt_Allow_External_Program: false
       MoveIt_Allow_Replanning: false
       MoveIt_Allow_Sensor_Positioning: false
@@ -87,11 +87,27 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          link_4:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          link_5:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          link_6:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           link_ee:
             Alpha: 1
             Show Axes: false
             Show Trail: false
-        Loop Animation: false
+            Value: true
+        Loop Animation: true
         Robot Alpha: 0.5
         Robot Color: 150; 50; 150
         Show Robot Collision: false
@@ -112,11 +128,11 @@ Visualization Manager:
         Colliding Link Color: 255; 0; 0
         Goal State Alpha: 1
         Goal State Color: 250; 128; 0
-        Interactive Marker Size: 0.10000000149011612
+        Interactive Marker Size: 0.25
         Joint Violation Color: 255; 0; 255
         Planning Group: arm
         Query Goal State: true
-        Query Start State: true
+        Query Start State: false
         Show Workspace: false
         Start State Alpha: 1
         Start State Color: 0; 255; 0
@@ -157,10 +173,26 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          link_4:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          link_5:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          link_6:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           link_ee:
             Alpha: 1
             Show Axes: false
             Show Trail: false
+            Value: true
         Robot Alpha: 0.5
         Show Robot Collision: false
         Show Robot Visual: true
@@ -184,25 +216,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 1.4655400514602661
+      Distance: 2.9206464290618896
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.29519274830818176
-        Y: 0.009179986082017422
-        Z: 0.6492826342582703
+        X: 0.12598396837711334
+        Y: 0.6891953349113464
+        Z: 0.6760169267654419
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.2600001394748688
+      Pitch: 0.05500009283423424
       Target Frame: base_link
       Value: Orbit (rviz_default_plugins)
-      Yaw: 2.3170008659362793
+      Yaw: 5.24518346786499
     Saved: ~
 Window Geometry:
   Displays:
@@ -216,9 +248,9 @@ Window Geometry:
     collapsed: false
   MotionPlanning - Trajectory Slider:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd0000000100000000000002b4000004edfc0200000005fb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000003f00fffffffb000000100044006900730070006c006100790073010000003b000002cd000000c700fffffffb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e0067010000030e000001740000016900fffffffb0000000800480065006c0070000000029a0000006e0000006e00fffffffb0000000a005600690065007700730100000488000000a0000000a000ffffff0000073a000004ed00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000100000000000002b4000004edfc0200000005fb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000003f00fffffffb000000100044006900730070006c006100790073010000003b000001a0000000c700fffffffb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e006701000001e10000023e0000016900fffffffb0000000800480065006c0070000000029a0000006e0000006e00fffffffb0000000a00560069006500770073010000042500000103000000a000ffffff0000073a000004ed00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Views:
     collapsed: false
   Width: 2548
-  X: -32
-  Y: -32
+  X: 0
+  Y: 0

@@ -1,0 +1,25 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: serial_link_robot
+    relative_path: urdf/serial_link_robot.urdf
+  srdf:
+    relative_path: config/serial_link_robot.srdf
+  package_settings:
+    author_name: Joel Tyrrell
+    author_email: joel.tyrrell@cqumail.com.au
+    generated_timestamp: 1777452365
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity
+  modified_urdf:
+    xacros:
+      - control_xacro
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity

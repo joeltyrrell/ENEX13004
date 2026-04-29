@@ -25,4 +25,15 @@ arm_controller:
     state_interfaces:
       - position
     allow_partial_joints_goal: false
-    # open_loop_control removed to ensure spline interpolation is active
+    arm_controller:
+  ros__parameters:
+    joints:
+      - joint_1
+      - joint_2
+      - joint_3
+      - joint_ee
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+    allow_partial_joints_goal: false

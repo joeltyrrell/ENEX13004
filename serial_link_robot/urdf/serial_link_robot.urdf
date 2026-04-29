@@ -1,89 +1,216 @@
 <?xml version="1.0"?>
 <robot name="serial_link_robot">
 
-  <!-- Base Link -->
+  <!-- Base -->
   <link name="base_link">
     <visual>
-      <origin xyz="0 0 0.1" rpy="0 0 0" />
+      <origin xyz="0 0 0.045" rpy="0 0 0"/>
       <geometry>
-        <box size="0.4 0.4 0.2"/>
+        <cylinder radius="0.09" length="0.09"/>
       </geometry>
       <material name="gray">
-        <color rgba="0.5 0.5 0.5 0.5"/>
+        <color rgba="0.4 0.4 0.4 1.0"/>
       </material>
     </visual>
+    <collision>
+      <origin xyz="0 0 0.045" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.09" length="0.09"/>
+      </geometry>
+    </collision>
   </link>
 
-  <!-- Joint 1 -->
+  <!-- Joint 1: base rotation -->
   <joint name="joint_1" type="revolute">
     <parent link="base_link"/>
     <child link="link_1"/>
-    <origin xyz="0 0 0.2" rpy="0 0 0" />
-    <axis xyz="0 0 1" />
-    <limit effort="100.0" velocity="0.5" lower="-3.14" upper="3.14"/>
+    <origin xyz="0 0 0.09" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-6.283" upper="6.283" effort="150" velocity="1.5"/>
   </joint>
 
-  <!-- Link 1 -->
+  <!-- Link 1: shoulder pedestal -->
   <link name="link_1">
     <visual>
-      <origin xyz="0 0 0.2" rpy="0 0 0" />
+      <origin xyz="0 0 0.08" rpy="0 0 0"/>
       <geometry>
-        <box size="0.05 0.05 0.4"/>
+        <cylinder radius="0.075" length="0.16"/>
       </geometry>
-      <material name="yellow">
-        <color rgba="1.0 1.0 0 0.5"/>
+      <material name="light_gray">
+        <color rgba="0.75 0.75 0.75 1.0"/>
       </material>
     </visual>
+    <collision>
+      <origin xyz="0 0 0.08" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.075" length="0.16"/>
+      </geometry>
+    </collision>
   </link>
-  <!-- Joint 2 -->
+
+  <!-- Joint 2: shoulder -->
   <joint name="joint_2" type="revolute">
     <parent link="link_1"/>
     <child link="link_2"/>
-    <origin xyz="0 0 0.4" rpy="0 0 0" />
-    <axis xyz="1 0 0" />
-    <limit effort="100.0" velocity="0.5" lower="-3.14" upper="3.14"/>
+    <origin xyz="0 0 0.16" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-3.14" upper="3.14" effort="150" velocity="1.5"/>
   </joint>
 
-  <!-- Link 2 -->
+  <!-- Link 2: upper arm -->
   <link name="link_2">
     <visual>
-      <origin xyz="0 0 0.25" rpy="0 0 0" />
+      <origin xyz="0 0 0.2125" rpy="0 0 0"/>
       <geometry>
-        <box size="0.05 0.05 0.5"/>
+        <cylinder radius="0.055" length="0.425"/>
       </geometry>
-      <material name="red">
-        <color rgba="1 0 0 0.5"/>
+      <material name="blue">
+        <color rgba="0.1 0.1 0.8 1.0"/>
       </material>
     </visual>
+    <collision>
+      <origin xyz="0 0 0.2125" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.055" length="0.425"/>
+      </geometry>
+    </collision>
   </link>
-    <!-- Joint 3 -->
+
+  <!-- Joint 3: elbow -->
   <joint name="joint_3" type="revolute">
     <parent link="link_2"/>
     <child link="link_3"/>
-    <origin xyz="0 0 0.5" rpy="0 0 0" />
-    <axis xyz="1 0 0" />
-    <limit effort="100.0" velocity="0.5" lower="-3.14" upper="3.14"/>
+    <origin xyz="0 0 0.425" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-3.14" upper="3.14" effort="120" velocity="1.5"/>
   </joint>
 
-  <!-- Link 3 -->
+  <!-- Link 3: forearm -->
   <link name="link_3">
     <visual>
-      <origin xyz="0 0.3 0" rpy="0 0 0" />
+      <origin xyz="0 0 0.196" rpy="0 0 0"/>
       <geometry>
-        <box size="0.05 0.6 0.05"/>
+        <cylinder radius="0.05" length="0.392"/>
       </geometry>
-      <material name="blue">
-        <color rgba="0 0 1 0.5"/>
+      <material name="red">
+        <color rgba="0.85 0.1 0.1 1.0"/>
       </material>
     </visual>
+    <collision>
+      <origin xyz="0 0 0.196" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.05" length="0.392"/>
+      </geometry>
+    </collision>
   </link>
-  <!-- End Effector Joint -->
-<joint name="joint_ee" type="fixed">
-  <parent link="link_3"/>
-  <child link="link_ee"/>
-  <origin xyz="0 0.6 0" rpy="0 0 0"/>
-</joint>
 
-<!-- End Effector Link -->
-<link name="link_ee"/>
+  <!-- Joint 4: wrist 1 -->
+  <joint name="joint_4" type="revolute">
+    <parent link="link_3"/>
+    <child link="link_4"/>
+    <origin xyz="0 0 0.392" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-6.283" upper="6.283" effort="80" velocity="2.0"/>
+  </joint>
+
+  <!-- Link 4: wrist section 1 -->
+  <link name="link_4">
+    <visual>
+      <origin xyz="0 0 0.055" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.04" length="0.11"/>
+      </geometry>
+      <material name="green">
+        <color rgba="0.1 0.7 0.1 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.055" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.04" length="0.11"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Joint 5: wrist 2 -->
+  <joint name="joint_5" type="revolute">
+    <parent link="link_4"/>
+    <child link="link_5"/>
+    <origin xyz="0 0 0.11" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-6.283" upper="6.283" effort="60" velocity="2.5"/>
+  </joint>
+
+  <!-- Link 5: wrist section 2 -->
+  <link name="link_5">
+    <visual>
+      <origin xyz="0 0 0.0475" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.035" length="0.095"/>
+      </geometry>
+      <material name="orange">
+        <color rgba="1.0 0.5 0.0 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.0475" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.035" length="0.095"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Joint 6: wrist 3 / tool flange rotation -->
+  <joint name="joint_6" type="revolute">
+    <parent link="link_5"/>
+    <child link="link_6"/>
+    <origin xyz="0 0 0.095" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-6.283" upper="6.283" effort="40" velocity="3.0"/>
+  </joint>
+
+  <!-- Link 6: tool mount -->
+  <link name="link_6">
+    <visual>
+      <origin xyz="0 0 0.0415" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.03" length="0.083"/>
+      </geometry>
+      <material name="purple">
+        <color rgba="0.5 0.1 0.7 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.0415" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.03" length="0.083"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- End effector -->
+  <joint name="joint_ee" type="fixed">
+    <parent link="link_6"/>
+    <child link="link_ee"/>
+    <origin xyz="0 0 0.083" rpy="0 0 0"/>
+  </joint>
+
+  <link name="link_ee">
+    <visual>
+      <origin xyz="0 0 0.03" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.028" length="0.06"/>
+      </geometry>
+      <material name="white">
+        <color rgba="1 1 1 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.03" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.028" length="0.06"/>
+      </geometry>
+    </collision>
+  </link>
+
 </robot>
