@@ -5,7 +5,7 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /MotionPlanning1
-        - /MotionPlanning1/Planning Request1
+        - /MotionPlanning1/Planned Path1
       Splitter Ratio: 0.5
     Tree Height: 287
   - Class: rviz_common/Help
@@ -107,11 +107,11 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-        Loop Animation: true
+        Loop Animation: false
         Robot Alpha: 0.5
         Robot Color: 150; 50; 150
         Show Robot Collision: false
-        Show Robot Visual: true
+        Show Robot Visual: false
         Show Trail: false
         State Display Time: 0.05 s
         Trail Step Size: 1
@@ -131,7 +131,7 @@ Visualization Manager:
         Interactive Marker Size: 0.25
         Joint Violation Color: 255; 0; 255
         Planning Group: arm
-        Query Goal State: true
+        Query Goal State: false
         Query Start State: false
         Show Workspace: false
         Start State Alpha: 1
@@ -215,26 +215,21 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Class: rviz_default_plugins/Orbit
-      Distance: 2.9206464290618896
+      Angle: 0
+      Class: rviz_default_plugins/TopDownOrtho
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
-      Focal Point:
-        X: 0.12598396837711334
-        Y: 0.6891953349113464
-        Z: 0.6760169267654419
-      Focal Shape Fixed Size: true
-      Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.05500009283423424
+      Scale: 533.0969848632812
       Target Frame: base_link
-      Value: Orbit (rviz_default_plugins)
-      Yaw: 5.24518346786499
+      Value: TopDownOrtho (rviz_default_plugins)
+      X: 0.0586855374276638
+      Y: 0.3047422170639038
     Saved: ~
 Window Geometry:
   Displays:
@@ -252,5 +247,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 2548
-  X: 0
-  Y: 0
+  X: 2526
+  Y: -44

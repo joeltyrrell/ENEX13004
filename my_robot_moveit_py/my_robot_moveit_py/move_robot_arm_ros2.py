@@ -24,7 +24,23 @@ class MoveToPosition(Node):
         self._action_client.wait_for_server()
         self.get_logger().info('Connected to /move_action')
 
+        self.lettercorners = [
+            {'x': -0.25,  'y': 0.0, 'z': 0.45},
+            {'x': -0.15, 'y': 0.2, 'z': 0.45},
+            {'x':  0.0,   'y': 0.5, 'z': 0.45},
+            {'x':  0.15, 'y': 0.2, 'z': 0.45},
+            {'x':  0.25,  'y': 0.0, 'z': 0.45}
+        ]
+        self.letterposition = 0
+
     def send_position_goal(self):
+        if self.letterposition >= 5:
+            self.get_logger().info('Completed all letter corners')
+            rclpy.shutdown()
+            return
+        
+        lp = self.lettercorners[self.letterposition]
+        
         goal_msg = MoveGroup.Goal()
 
         request = MotionPlanRequest()
@@ -36,9 +52,9 @@ class MoveToPosition(Node):
         target_pose.header.frame_id = 'base_link'
 
         # Small move from your initial position
-        target_pose.pose.position.x = -0.20
-        target_pose.pose.position.y = 1.0
-        target_pose.pose.position.z = 0.2
+        target_pose.pose.position.x = lp['x']
+        target_pose.pose.position.y = lp['y']
+        target_pose.pose.position.z = lp['z']
 
         position_constraint = PositionConstraint()
         position_constraint.header = target_pose.header
@@ -46,7 +62,7 @@ class MoveToPosition(Node):
 
         region = SolidPrimitive()
         region.type = SolidPrimitive.BOX
-        region.dimensions = [0.05, 0.05, 0.05]
+        region.dimensions = [0.01, 0.01, 0.01]
 
         position_constraint.constraint_region.primitives.append(region)
         position_constraint.constraint_region.primitive_poses.append(target_pose.pose)
@@ -83,8 +99,14 @@ class MoveToPosition(Node):
 
     def result_callback(self, future):
         result = future.result().result
-        self.get_logger().info(f"Result error code: {result.error_code.val}")
-        rclpy.shutdown()
+        
+        if result.error_code.val == 1:
+            self.get_logger().info('Step Successful') 
+            self.letterposition += 1
+            self.send_position_goal()
+        else:
+            self.get_logger().info(f"Result error code: {result.error_code.val}")
+            rclpy.shutdown()
 
 
 def main(args=None):
