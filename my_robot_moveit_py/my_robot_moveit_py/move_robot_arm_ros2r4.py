@@ -23,7 +23,7 @@ class MoveToPosition(Node):
         self._move_client.wait_for_server()
         self.get_logger().info('Connected to move_action')
 
-        # Initialise GetCartesianPath - Straight line path between letter points
+        # Initialise GetCartesianPath - Striaght line path between letter points
         self._cartesian_client = self.create_client(GetCartesianPath, 'compute_cartesian_path')
         self.get_logger().info('Waiting for compute_cartesian_path service...')
         self._cartesian_client.wait_for_service()
@@ -47,10 +47,8 @@ class MoveToPosition(Node):
             {'x': 0.534, 'y': -0.15, 'z': 0.472},  # Crossbar Left
             {'x': 0.534, 'y':  0.15, 'z': 0.472}   # Crossbar Right
         ]
-        self.timer = None
-        self.next_task = None
 
-    # Create pose message with horizontal EE orientation and position of letter point.
+    #Create pose message with horizontal EE orientation and position of letter point.
     def create_pose(self, lp):
         p = Pose()
         p.position.x = lp['x']
@@ -64,7 +62,7 @@ class MoveToPosition(Node):
         p.orientation.w = 0.7071
         return p
     
-    # Check if goal was accepted and if so, wait for result. If not, shutdown node.
+    #Check if goal was accepted and if so, wait for result. If not, shutdown node.
     def action_response_callback(self, future):
         goal_handle = future.result()
         if not goal_handle.accepted:
@@ -74,21 +72,19 @@ class MoveToPosition(Node):
         self.get_logger().info('Goal accepted')
         goal_handle.get_result_async().add_done_callback(self.action_result_callback)
 
-    # Check if action succeeded and if so, execute next task. If not, shutdown node.
+    #Check if action succeeded and if so, execute next task. If not, shutdown node.
     def action_result_callback(self, future):
         result = future.result().result
         # MoveIt error code 1 = Pass
         if result.error_code.val == 1:
             self.get_logger().info('Action successful.')
-            # Increment position
-            self.letterposition += 1
             if self.next_task:
                 self.next_task()
         else:
             self.get_logger().error(f"Action failed code: {result.error_code.val}")
             rclpy.shutdown()
 
-    # Use MoveGroup action to move robot to the apex of letter A
+    #Use MoveGroup action to move robot from any random position to the apex of letter A, done with joint constraints to ensure robot start pose is consistent.
     def move_to_start(self):
         self.get_logger().info('Moving to Initial Position...')
         
@@ -112,25 +108,26 @@ class MoveToPosition(Node):
             jc.weight = 1.0
             constraints.joint_constraints.append(jc)
 
-        # Set the goal constraints to the joint constraints defined above 
+        # Set the goal constraints to the joint constraints defined above    
         request.goal_constraints = [constraints]
         goal_msg.request = request
         goal_msg.planning_options = PlanningOptions()
 
-        # On successful completion of this move, start the preview of the letter path.
+        # On successful completion of this move, start the preview of the letter path. 
         self.next_task = self.start_preview
         future = self._move_client.send_goal_async(goal_msg)
         future.add_done_callback(self.action_response_callback)
 
     # Show Robot arm trail for total letter
     def start_preview(self):
+
         self.get_logger().info('Computing Letter trail...')
         
         # Create a Cartesian path request with all letter points as waypoints to show the full trail. 
         req = GetCartesianPath.Request()
         req.header.frame_id = 'base_link'
         req.group_name = 'arm'
-        req.max_step = 0.05
+        req.max_step = 0.02 # Resolution of the calculated line
         
         for lp in self.letterpoints:
             req.waypoints.append(self.create_pose(lp))
@@ -140,43 +137,34 @@ class MoveToPosition(Node):
         
         # 10s delay to allow inspection of the computed path before moving
         self.get_logger().info('Trail Computed, Waiting 10 seconds...')
-        self.timer = self.create_timer(10.0, self.move_to_next_corner)
+        self.timer = self.create_timer(10.0, self.send_segment_goal)
 
-    # Move to next corner of letter, if there are no more corners, end the script.
-    def move_to_next_corner(self):
-        #Cancel Timer from Animation phase
+    def send_segment_goal(self):
         if self.timer: 
             self.timer.cancel()
             self.timer = None
 
-        # Check if we have completed all corners of the letter
-        if self.letterposition >= 6:
+        if self.letterposition >= len(self.letterpoints):
             self.get_logger().info('Drawing Complete!')
             return rclpy.shutdown()
 
-        
-        self.get_logger().info('Moving to next corner')
-
-        # Initialize a Cartesian path request for the next letter point
-        req = GetCartesianPath.Request()
+        self.get_logger().info(f'Moving to corner {self.letterposition}...')
+        req = GetCartesianPath.Request(group_name='arm', max_step=0.1)
         req.header.frame_id = 'base_link'
-        req.group_name = 'arm'
-        req.max_step = 0.05
-
-        # Append the next letter point as the target for the cartesian path
         req.waypoints.append(self.create_pose(self.letterpoints[self.letterposition]))
 
-        # Pass to execute segemnt callback
         self._cartesian_client.call_async(req).add_done_callback(self.exec_segment_cb)
 
-    #Execute a segment of the letter moving the robot
     def exec_segment_cb(self, future):
-        goal_msg = ExecuteTrajectory.Goal()
-        goal_msg.trajectory=future.result().solution
-        self.next_task = self.move_to_next_corner
+        # Result from Cartesian path service is used to create the execution goal
+        goal_msg = ExecuteTrajectory.Goal(trajectory=future.result().solution)
+        self.next_task = self.increment_and_loop
         future = self._execute_client.send_goal_async(goal_msg)
         future.add_done_callback(self.action_response_callback)
 
+    def increment_and_loop(self):
+        self.letterposition += 1
+        self.send_segment_goal()
 
 def main(args=None):
     rclpy.init(args=args)
