@@ -13,9 +13,9 @@ from moveit_msgs.msg import (
 )
 from moveit_msgs.srv import GetCartesianPath
 
-class MoveToPosition(Node):
+class DrawLetterA(Node):
     def __init__(self):
-        super().__init__('move_arm_position')
+        super().__init__('draw_letter_a')
         
         # Initialise MoveGroup - move robot from random position to start position
         self._move_client = ActionClient(self, MoveGroup, 'move_action')
@@ -47,8 +47,7 @@ class MoveToPosition(Node):
             {'x': 0.534, 'y': -0.15, 'z': 0.472},  # Crossbar Left
             {'x': 0.534, 'y':  0.15, 'z': 0.472}   # Crossbar Right
         ]
-        self.timer = None
-        self.next_task = None
+
 
     # Create pose message with horizontal EE orientation and position of letter point.
     def create_pose(self, lp):
@@ -180,7 +179,7 @@ class MoveToPosition(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    node = MoveToPosition()
+    node = DrawLetterA()
     node.move_to_start()
     rclpy.spin(node)
 
